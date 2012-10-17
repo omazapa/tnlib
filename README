@@ -1,0 +1,16 @@
+This is libraries for mathematicians computer science in Theory Number,
+the idea is provide a set of tools to do works in severals areas like IA, cryptography
+Gruops Theory and more.
+This libraries are just under design.
+
+Some references books,
+Elementary Number Theory - David_M._Burton
+
+
+some tools that will be used
+->The GNU Multiple Precision Arithmetic Library (GMP)
+->cmake 
+
+
+If you want contribute please contact to me to andresete.chaso@gmail.com
+
