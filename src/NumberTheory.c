@@ -73,6 +73,23 @@ long long int elMenor(long long int a,long long int b)
   else return b;
 }
 
+//Números primos entre si dos a dos son aquellos donde cada uno es primo con cada uno de los demas. 
+//Así 33, 8, 7 y 55 son primos entre si ya que cada uno es primo entre si con los demas
+//http://enciclopedia.us.es/index.php/N%C3%BAmero_natural_primo
+//n es el tamaño del array primos el array con los numeros a mirar si son dos a dos
+bool primos_dosados(int n,long long int *primos)
+{
+  	int i,j;
+
+	for (i=0; i<n-1; i++)
+		for (j=i+1; j<n; j++) {
+			if (gcd(primos[i],primos[j])!=1) return false;
+		}
+	return true;
+}
+
+
+
 bool esPrimo(long long int a)
 {
   if(a<=1) return false;//estan definidos para a>1
@@ -141,6 +158,36 @@ long long int phiEulerPow(long long int N, long long int exp)
 long long int phiEuler(long long int N)
 {
   return phiEulerPow(N,1);
+}
+
+//http://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Formal_description_of_the_algorithm
+//el algoritmo extendido de euclides que me permite hallar a*coef1+b*coef2=gcd(a,b)
+//dados un a y b me retorna coef1, coef2 y gcd
+void eclides_extendido(long long int a, long long int b, long long int *coef1, long long int *coef2, long long int *gcdab)
+{
+  //el valor inicial de residue uno para que entre iterando en el while
+  long long int x,y,lastx,lasty,quotientr1,quotientr2,quotient,residue=1;
+	
+	if (a<b){
+	  //necesito que a>=b para la divison que hay mas abajo
+	  eclides_extendido(b,a,coef2,coef1,gcdab);
+	  return;
+	}
+	x=1; y=0;
+	lastx=0; lasty=1;
+	while (residue != 0) {
+		quotient = a/b;
+		residue = a%b;
+		quotientr1 = x - quotient*lastx;
+		quotientr2 = y - quotient*lasty;
+		x=lastx; y=lasty;
+		lastx=quotientr1 ; lasty=quotientr2 ;
+		a =b ; b =residue ;
+	}
+	//paso los valores a los punteros
+	gcdab[0]=a;
+	coef1[0]=x;
+	coef2[0]=y;
 }
 
 void eccDiofantica(long long int a, long long int b, long long int t[], int n)

@@ -22,6 +22,11 @@ bool esPrimo(long long int a);
 long long int phiEulerPow(long long int i, long long int exp);
 long long int phiEuler(long long int i);//para exponente 1 por defecto
 
+bool primos_dosados(int n,long long int *primos);
+
+void eclides_extendido(long long int  a, long long int b, long long int *coef1, long long int  *coef2, long long int *gcdab);
+
+
 //soluciona la ecc diofantica para los coefficientes ax+by=c 
 //y evalua los valores de t del array donde n es el tamano de n
 void eccDiofantica(long long int a, long long int b, long long int t[],int n);
