@@ -24,8 +24,11 @@ long long int phiEuler(long long int i);//para exponente 1 por defecto
 
 bool primos_dosados(int n,long long int *primos);
 
-void eclides_extendido(long long int  a, long long int b, long long int *coef1, long long int  *coef2, long long int *gcdab);
+void eclides_extendido(long long int  a, long long int b, long long int *coef1, long long int  *coef2);
 
+void congruencia_lineal(long long int a,long long int b,long long int m);
+
+void congruencia_lineal_x0(long long int a,long long int b,long long int m,long long int x0);
 
 //soluciona la ecc diofantica para los coefficientes ax+by=c 
 //y evalua los valores de t del array donde n es el tamano de n

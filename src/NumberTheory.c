@@ -162,15 +162,16 @@ long long int phiEuler(long long int N)
 
 //http://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Formal_description_of_the_algorithm
 //el algoritmo extendido de euclides que me permite hallar a*coef1+b*coef2=gcd(a,b)
-//dados un a y b me retorna coef1, coef2 y gcd
-void eclides_extendido(long long int a, long long int b, long long int *coef1, long long int *coef2, long long int *gcdab)
+//dados un a y b me retorna coef1, coef2 y gcd 
+//NOTA: el m para este ejercicio es gcd(a,b)
+void eclides_extendido(long long int a, long long int b, long long int *coef1, long long int *coef2)
 {
   //el valor inicial de residue uno para que entre iterando en el while
   long long int x,y,lastx,lasty,quotientr1,quotientr2,quotient,residue=1;
 	
 	if (a<b){
 	  //necesito que a>=b para la divison que hay mas abajo
-	  eclides_extendido(b,a,coef2,coef1,gcdab);
+	  eclides_extendido(b,a,coef2,coef1);
 	  return;
 	}
 	x=1; y=0;
@@ -185,9 +186,47 @@ void eclides_extendido(long long int a, long long int b, long long int *coef1, l
 		a =b ; b =residue ;
 	}
 	//paso los valores a los punteros
-	gcdab[0]=a;
 	coef1[0]=x;
 	coef2[0]=y;
+}
+
+//calcula el sistema linel (a)x=(b)mod(m)
+//calcula automaticamente el x0
+
+void congruencia_lineal(long long int a,long long int b,long long int m)
+{
+  long long int mcd=gcd(a,b);
+  long long int coef1,coef2;
+  if (b%mcd!=0) 
+  {
+		printf("El sistema es inconsistente, la congruencia lineal no se puede resolver.\n");
+		return;
+  }
+  eclides_extendido(a,b,&coef1,&coef2);
+  
+  //solucion inicial x0
+  long long int x0 = (coef1*b/mcd)%m;
+  printf("x0 = %ld\n",x0);
+ //itero las demas soluciones
+  long long int t;
+   for (t=0; t<mcd; t++) printf("x=%ld  \n",x0+t*(m/mcd));    
+}
+
+//es la congruencia lineal pero nosotros le damos el valor inicial
+void congruencia_lineal_x0(long long int a,long long int b,long long int m,long long int x0)
+{
+  long long int mcd=gcd(a,b);
+  long long int coef1,coef2;
+  if (b%mcd!=0) 
+  {
+		printf("El sistema es inconsistente, la congruencia lineal no se puede resolver.\n");
+		return;
+  }
+  eclides_extendido(a,b,&coef1,&coef2);
+  
+ //itero las demas soluciones
+  long long int t;
+   for (t=0; t<mcd; t++) printf("x=%ld  \n",x0+t*(m/mcd));   
 }
 
 void eccDiofantica(long long int a, long long int b, long long int t[], int n)
