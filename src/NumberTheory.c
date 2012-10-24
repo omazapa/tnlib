@@ -229,7 +229,79 @@ void congruencia_lineal_x0(long long int a,long long int b,long long int m,long 
    for (t=0; t<mcd; t++) printf("x=%ld  \n",x0+t*(m/mcd));   
 }
 
-void eccDiofantica(long long int a, long long int b, long long int t[], int n)
+void ecucacion_diofantica(long long int a, long long int b,long long int m, long long int t[], int n)
 {
-  
+    long long int coef1,coef2;
+    long long int mcd=gcd(a,b);
+    eclides_extendido(a,b,&coef1,&coef2);
+	if (m%mcd!= 0) {
+		printf("El sistema es inconsistente, la ecuación diofantica no se puede resolver\n");
+		return;
+	}
+     //con esto tengo una posible condicion inicial
+     //si quiero poner condiciones iniciales uso la otra funcion
+     //ecucacion_diofantica_x0_y0
+     long long int x0=coef1*m/mcd;
+     long long int y0=coef2*m/mcd;
+     int i;
+     //ya tenemos las condiciones iniciales solo es iterar sobre t
+     //los n elementos dados en el array para imprimir los x(i), y(i)
+     long long int xi;
+     long long int yi;
+     //los for son para imprimir los datos en tablas, \t es un tab como espacio
+     for(i=0;i<n;i++){
+       if(i==0)   printf("t=%ld\t\t|",t[i]);
+       else   printf("%ld\t\t|",t[i]);
+      }
+     printf("\n");
+     for(i=0;i<n;i++)
+     {
+       xi=x0+(b/mcd)*t[i];
+        if(i==0)  printf("x=%ld\t\t|",xi);
+       else printf("%ld\t\t|",xi);
+     }
+      printf("\n");
+     for(i=0;i<n;i++)
+     {
+        yi=x0-(a/mcd)*t[i];
+        if(i==0)  printf("y=%ld\t\t|",yi);
+        else printf("%ld\t\t|",yi);
+     }
+      printf("\n");
+}
+
+void ecucacion_diofantica_x0_y0(long long int a, long long int b,long long int m, long long int t[], int n,long long int x0,long long int y0)
+{
+      long long int coef1,coef2;
+    long long int mcd=gcd(a,b);
+    eclides_extendido(a,b,&coef1,&coef2);
+	if (m%mcd!= 0) {
+		printf("El sistema es inconsistente, la ecuación diofantica no se puede resolver\n");
+		return;
+	}
+     int i;
+     //ya tenemos las condiciones iniciales solo es iterar sobre t
+     //los n elementos dados en el array para imprimir los x(i), y(i)
+     long long int xi;
+     long long int yi;
+     //los for son para imprimir los datos en tablas, \t es un tab como espacio
+     for(i=0;i<n;i++){
+       if(i==0)   printf("t=%ld\t\t|",t[i]);
+       else   printf("%ld\t\t|",t[i]);
+      }
+     printf("\n");
+     for(i=0;i<n;i++)
+     {
+       xi=x0+(b/mcd)*t[i];
+        if(i==0)  printf("x=%ld\t\t|",xi);
+       else printf("%ld\t\t|",xi);
+     }
+      printf("\n");
+     for(i=0;i<n;i++)
+     {
+        yi=x0-(a/mcd)*t[i];
+        if(i==0)  printf("y=%ld\t\t|",yi);
+        else printf("%ld\t\t|",yi);
+     }
+      printf("\n");
 }

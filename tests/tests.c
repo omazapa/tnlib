@@ -32,5 +32,13 @@ int main()
   congruencia_lineal(a,b,m);
   //este nos da la seria empezando desde el x0 dado.
   congruencia_lineal_x0(a,b,m,4);
+  //ecuacion diofantica 2x+5y=28 donde a=2,b=5,m=28
+  a=2;b=5;m=28;
+  long long int t[]={-3,-2,1,2,3};//los valores de t para evaluar x & y
+  n=5;
+  printf("--------------------------------------------------------------------------------\n");
+  ecucacion_diofantica(a,b,m,t,n);
+  printf("--------------------------------------------------------------------------------\n");
+  ecucacion_diofantica_x0_y0(a,b,m,t,n,4,4);
   return 0;
 }

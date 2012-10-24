@@ -30,8 +30,10 @@ void congruencia_lineal(long long int a,long long int b,long long int m);
 
 void congruencia_lineal_x0(long long int a,long long int b,long long int m,long long int x0);
 
-//soluciona la ecc diofantica para los coefficientes ax+by=c 
+//soluciona la ecc diofantica para los coefficientes ax+by=m 
 //y evalua los valores de t del array donde n es el tamano de n
-void eccDiofantica(long long int a, long long int b, long long int t[],int n);
+void ecucacion_diofantica(long long int a, long long int b,long long int m, long long int t[], int n);
+
+void ecucacion_diofantica_x0_y0(long long int a, long long int b,long long int m, long long int t[], int n,long long int x0,long long int y0);
 
 #endif
