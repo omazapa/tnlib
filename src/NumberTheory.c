@@ -162,16 +162,16 @@ long long int phiEuler(long long int N)
 
 //http://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Formal_description_of_the_algorithm
 //el algoritmo extendido de euclides que me permite hallar a*coef1+b*coef2=gcd(a,b)
-//dados un a y b me retorna coef1, coef2 y gcd 
+//dados un a y b me retorna coef1, coef2 
 //NOTA: el m para este ejercicio es gcd(a,b)
-void eclides_extendido(long long int a, long long int b, long long int *coef1, long long int *coef2)
+void euclides_extendido(long long int a, long long int b, long long int *coef1, long long int *coef2)
 {
   //el valor inicial de residue uno para que entre iterando en el while
   long long int x,y,lastx,lasty,quotientr1,quotientr2,quotient,residue=1;
 	
 	if (a<b){
 	  //necesito que a>=b para la divison que hay mas abajo
-	  eclides_extendido(b,a,coef2,coef1);
+	  euclides_extendido(b,a,coef2,coef1);
 	  return;
 	}
 	x=1; y=0;
@@ -202,7 +202,7 @@ void congruencia_lineal(long long int a,long long int b,long long int m)
 		printf("El sistema es inconsistente, la congruencia lineal no se puede resolver.\n");
 		return;
   }
-  eclides_extendido(a,b,&coef1,&coef2);
+  euclides_extendido(a,b,&coef1,&coef2);
   
   //solucion inicial x0
   long long int x0 = (coef1*b/mcd)%m;
@@ -222,7 +222,7 @@ void congruencia_lineal_x0(long long int a,long long int b,long long int m,long 
 		printf("El sistema es inconsistente, la congruencia lineal no se puede resolver.\n");
 		return;
   }
-  eclides_extendido(a,b,&coef1,&coef2);
+  euclides_extendido(a,b,&coef1,&coef2);
   
  //itero las demas soluciones
   long long int t;
@@ -233,7 +233,7 @@ void ecucacion_diofantica(long long int a, long long int b,long long int m, long
 {
     long long int coef1,coef2;
     long long int mcd=gcd(a,b);
-    eclides_extendido(a,b,&coef1,&coef2);
+    euclides_extendido(a,b,&coef1,&coef2);
 	if (m%mcd!= 0) {
 		printf("El sistema es inconsistente, la ecuación diofantica no se puede resolver\n");
 		return;
@@ -249,6 +249,7 @@ void ecucacion_diofantica(long long int a, long long int b,long long int m, long
      long long int xi;
      long long int yi;
      //los for son para imprimir los datos en tablas, \t es un tab como espacio
+     //referencia http://www.tenouk.com/Module5.html
      for(i=0;i<n;i++){
        if(i==0)   printf("t=%ld\t\t|",t[i]);
        else   printf("%ld\t\t|",t[i]);
@@ -274,7 +275,7 @@ void ecucacion_diofantica_x0_y0(long long int a, long long int b,long long int m
 {
       long long int coef1,coef2;
     long long int mcd=gcd(a,b);
-    eclides_extendido(a,b,&coef1,&coef2);
+    euclides_extendido(a,b,&coef1,&coef2);
 	if (m%mcd!= 0) {
 		printf("El sistema es inconsistente, la ecuación diofantica no se puede resolver\n");
 		return;
@@ -285,6 +286,7 @@ void ecucacion_diofantica_x0_y0(long long int a, long long int b,long long int m
      long long int xi;
      long long int yi;
      //los for son para imprimir los datos en tablas, \t es un tab como espacio
+     //referencia http://www.tenouk.com/Module5.html
      for(i=0;i<n;i++){
        if(i==0)   printf("t=%ld\t\t|",t[i]);
        else   printf("%ld\t\t|",t[i]);
@@ -304,4 +306,46 @@ void ecucacion_diofantica_x0_y0(long long int a, long long int b,long long int m
         else printf("%ld\t\t|",yi);
      }
       printf("\n");
+}
+
+//resulve el sistema 
+//x=a(i)mod(m(i)) para 0<i<n
+//http://www.dma.fi.upm.es/java/matematicadiscreta/Aritmeticamodular/congruencias2.html
+//en el link anterior explican como se saca con el inverso modular
+bool teorema_chino(int n,long long int  *x, long long int  *a, long long int  *m)
+{
+  //miramos si son primos entre si o primos dos a dos (coprimos)
+  if (primos_dosados(n,m) != 1) return false;
+  long long int productoria=1;//termino con el que hago la productoria de los modulos m
+  long long int i;
+  //variables temporales
+  long long int divisores[n],inversos_mudulares[n];
+  
+  for(i=0;i<n;i++) productoria*=m[i];
+  
+        for (i=0; i<n; i++) {
+                divisores[i]= productoria / m[i];
+                inverso_modular(divisores[i],m[i],&inversos_mudulares[i]);
+        }
+        x[0]= 0;
+	for (i=0; i<n; i++)
+		x[0] +=  a[i] * divisores[i] * inversos_mudulares[i];
+	x[0] %= productoria;
+	return true;
+}
+
+//tomado de wikipedia, el algoritmo hecho con euclides_extendido
+//http://es.wikipedia.org/wiki/Inverso_multiplicativo_(aritm%C3%A9tica_modular)
+//3m ≡ 1 (mod 11)
+//El m más pequeño que resuelve esta congruencia es 4; así pues, el multiplicador modular inverso de 3 (mod 11) es 4. 
+bool inverso_modular(long long int a,long long int m,long long int *inverso)
+{
+  long long int coef1, coef2, mcd=1;
+        euclides_extendido(a,m,&coef1,&coef2);
+	mcd=gcd(a,m);
+	
+	if (mcd!=1) return false;
+	*inverso = coef1;
+	if (*inverso<0) *inverso += m;
+	return true;
 }

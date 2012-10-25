@@ -24,7 +24,7 @@ long long int phiEuler(long long int i);//para exponente 1 por defecto
 
 bool primos_dosados(int n,long long int *primos);
 
-void eclides_extendido(long long int  a, long long int b, long long int *coef1, long long int  *coef2);
+void euclides_extendido(long long int  a, long long int b, long long int *coef1, long long int  *coef2);
 
 void congruencia_lineal(long long int a,long long int b,long long int m);
 
@@ -36,4 +36,11 @@ void ecucacion_diofantica(long long int a, long long int b,long long int m, long
 
 void ecucacion_diofantica_x0_y0(long long int a, long long int b,long long int m, long long int t[], int n,long long int x0,long long int y0);
 
+//resulve el sistema 
+//x=a(i)mod(m(i)) para 0<i<n
+//retorna false o true si se genera o no un error
+bool teorema_chino(int n,long long int  *x, long long int  *a, long long int  *m);
+bool inverso_modular(long long int a,long long int m,long long int *inverso);
+
 #endif
+
